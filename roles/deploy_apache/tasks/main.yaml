@@ -1,0 +1,25 @@
+- name: Install python3 and apache
+  vars:
+    ansible_python_interpreter: /usr/bin/python
+  yum:
+    name: 
+      - python3
+      - httpd
+      - libselinux-python3
+    update_cache: true
+    state: present
+
+- name: Configure start page
+  copy:
+    dest: /var/www/html/index.html
+    content: Welcome to hostname
+  
+- name: Replace string in index.html with hostname variable
+  shell: 
+    cmd: sed -i "s/hostname/$(hostname)/" index.html
+    chdir: /var/www/html/
+
+- name: Start apache server
+  service:
+    name: httpd
+    state: started

@@ -1,0 +1,18 @@
+---
+- name: Wait for ssh connection
+  hosts: tag_RS_apache_server:tag_RS_haproxy_server
+  gather_facts: false
+  roles:
+    - ensure_ssh_open
+
+- name: Deploy Apache server
+  hosts: tag_RS_apache_server
+  become: yes
+  roles: 
+    - deploy_apache
+
+- name: Deploy haproxy
+  hosts: tag_RS_haproxy_server
+  become: yes
+  roles:
+    - deploy_haproxy
