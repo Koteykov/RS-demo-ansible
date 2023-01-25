@@ -1,14 +1,4 @@
 ---
-- name: Install netaddr
-  hosts: tag_RS_control_server
-  vars:
-    ansible_python_interpreter: /usr/bin/python
-  yum:
-    name:
-      - python3-netaddr
-    update_cache: true
-    state: present
-
 - name: Wait for ssh connection
   hosts: tag_RS_apache_server:tag_RS_haproxy_server
   gather_facts: false
