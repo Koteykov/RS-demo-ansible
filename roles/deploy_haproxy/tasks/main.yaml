@@ -7,8 +7,9 @@
       - haproxy
     update_cache: true
     state: present
+
 - name: Copy the config file to haproxy server
-  copy:
+  template:
     src: haproxy.cfg
     dest: /etc/haproxy/haproxy.cfg
 

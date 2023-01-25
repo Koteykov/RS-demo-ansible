@@ -9,15 +9,20 @@
     update_cache: true
     state: present
 
-- name: Configure start page
-  copy:
-    dest: /var/www/html/index.html
-    content: Welcome to hostname
-  
-- name: Replace string in index.html with hostname variable
-  shell: 
-    cmd: sed -i "s/hostname/$(hostname)/" index.html
-    chdir: /var/www/html/
+- name: Create www directory
+  file:
+    path: /opt/html
+    state: directory
+
+- name: Create start page
+  template:
+    src: index.html
+    dest: /opt/html/index.html
+
+- name: Change main configuration file
+  template:
+    src: httpd.conf
+    dest: /etc/httpd/conf/httpd.conf
 
 - name: Start apache server
   service:
